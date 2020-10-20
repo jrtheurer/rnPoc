@@ -79,7 +79,7 @@ const App = () => {
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-            <Image style={{height: 200, width: '100%' }} source={require('./assets/kglogo.jpg')}></Image>
+            <View style={{flex: 1, backgroundColor: '#ffffff', alignItems: 'center'}}><Image style={{height: 200, width: '90%' }} source={require('./assets/kglogo.jpg')}></Image></View>
             <View style={styles.body}>
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Step One: Scan a barcode</Text>
