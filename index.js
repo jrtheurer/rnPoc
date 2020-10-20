@@ -1,9 +1,39 @@
 /**
  * @format
  */
-
-import {AppRegistry} from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import App from './App';
-import {name as appName} from './app.json';
+import Scanner from './Scanner';
+import { Styles } from './Styles';
 
-AppRegistry.registerComponent(appName, () => App);
+Navigation.registerComponent('com.yardapppoc', () => App);
+Navigation.registerComponent('scanner', () => Scanner);
+Navigation.setDefaultOptions({
+  statusBar: {
+    backgroundColor: Styles.colors.KarGreen
+  },
+  topBar: {
+    title: {
+      color: 'white'
+    },
+    background: Styles.colors.KarGreen,
+    backButton: {
+      color: 'white'
+    }
+  }
+});
+Navigation.events().registerAppLaunchedListener(() => {
+   Navigation.setRoot({
+     root: {
+       stack: {
+         children: [
+           {
+             component: {
+               name: 'com.yardapppoc'
+             }
+           }
+         ]
+       }
+     }
+  });
+});

@@ -22,18 +22,16 @@ import {
   Image,
 } from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
+import { Navigation } from 'react-native-navigation';
 
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import { Styles } from './Styles';
 
-const App = () => {
+const App = ({ componentId, barcodeData }) => {
   const [hasPermission, setHasPermission] = useState<boolean>();
-  const [scanned, setScanned] = useState<boolean>(false);
-  const [turnCameraOn, setTurnCameraOn] = useState<boolean>(false);
-  const [scannedVin, setScannedVin ] = useState<string>();
-  const [torchOn, setTorchOn ] = useState<boolean>(false);
-  const [barcodeType, setBarcodeType] = useState<string>();
+  const [scannedData, setScannedData] = useState(barcodeData);
 
   useEffect(() => {
     (async () => {
@@ -51,30 +49,6 @@ const App = () => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      {turnCameraOn ? 
-        <View style={StyleSheet.absoluteFillObject}>
-          <Camera 
-          style={{ flex: 1, flexDirection: 'column' }}
-          barCodeScannerSettings={{
-            barCodeTypes: [
-              BarCodeScanner.Constants.BarCodeType.code128, 
-              BarCodeScanner.Constants.BarCodeType.code39,
-              BarCodeScanner.Constants.BarCodeType.qr
-            ]
-          }}
-          flashMode={torchOn ? 'torch' : 'off'}
-          ratio='16:9'
-          onBarCodeScanned={scanned ? (obj) => {} : (obj) => {
-            setScanned(true);
-            setScannedVin(obj.data);
-            setBarcodeType(obj.type);
-            setTurnCameraOn(false);
-            setScanned(false);
-          }}>
-          <BarcodeMask showAnimatedLine={false} width="90%" edgeColor='#057049'/>
-          <TouchableOpacity style={{backgroundColor: 'white', height: 25, borderRadius: 6, alignItems: 'flex-end'}} onPress={() => setTorchOn(!torchOn)}><Text>FlashLight</Text></TouchableOpacity></Camera>
-        </View> : 
         <SafeAreaView>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
@@ -93,19 +67,43 @@ const App = () => {
                     flex: 1,
                     flexDirection: "column"
                   }} 
-                  onPress={() => setTurnCameraOn(!turnCameraOn)}>
+                  onPress={() => Navigation.push(componentId, { 
+                    component: {
+                      name: 'scanner'
+                    }
+                   })}>
                     <Text style={{color: 'white', fontSize: 26}}>Scan</Text>
                   </TouchableOpacity>
                 </View>
-              </View>
-              {!!scannedVin ? <View style={{flex: 1, paddingHorizontal: 24, paddingVertical: 3, flexDirection: 'column'}}>
+                {!!scannedData ? <View style={{flex: 1, paddingHorizontal: 24, paddingVertical: 3, flexDirection: 'column'}}>
                 <Text style={{fontSize: 24}}>Result: </Text>
-                <Text style={{fontSize: 18}}>{scannedVin}</Text>
-                <Text>{barcodeType}</Text>
+                <Text style={{fontSize: 18}}>{scannedData}</Text>
               </View> : null}
+                </View>
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>Step Two: Print a sticker</Text>
+                <View style={{flex: 1}}>
+                  <TouchableOpacity 
+                  style={{ 
+                    alignItems: 'center',
+                    borderRadius: 6,
+                    backgroundColor: "#057049",
+                    width: 100,
+                    flex: 1,
+                    flexDirection: "column"
+                  }} 
+                  onPress={() => Navigation.push(componentId, { 
+                    component: {
+                      name: 'printer'
+                    }
+                   })}>
+                    <Text style={{color: 'white', fontSize: 26}}>Print</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
           </ScrollView>
-        </SafeAreaView>}
+        </SafeAreaView>
     </>
   );
 };
@@ -150,5 +148,17 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
+
+App.options = {
+  topBar: {
+    title: {
+      text: 'Home',
+      color: 'white'
+    },
+    background: {
+      color: Styles.colors.KarGreen
+    }
+  }
+};
 
 export default App;
