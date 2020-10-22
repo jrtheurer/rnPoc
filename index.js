@@ -3,11 +3,13 @@
  */
 import { Navigation } from 'react-native-navigation';
 import App from './App';
+import Printer from './Printer';
 import Scanner from './Scanner';
 import { Styles } from './Styles';
 
 Navigation.registerComponent('com.yardapppoc', () => App);
 Navigation.registerComponent('scanner', () => Scanner);
+Navigation.registerComponent('printer', () => Printer);
 Navigation.setDefaultOptions({
   statusBar: {
     backgroundColor: Styles.colors.KarGreen

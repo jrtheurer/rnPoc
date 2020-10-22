@@ -29,9 +29,9 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import { Styles } from './Styles';
 
-const App = ({ componentId, barcodeData }) => {
+const App = ({ componentId }) => {
   const [hasPermission, setHasPermission] = useState<boolean>();
-  const [scannedData, setScannedData] = useState(barcodeData);
+  const [scannedData, setScannedData] = useState();
 
   useEffect(() => {
     (async () => {
@@ -69,7 +69,10 @@ const App = ({ componentId, barcodeData }) => {
                   }} 
                   onPress={() => Navigation.push(componentId, { 
                     component: {
-                      name: 'scanner'
+                      name: 'scanner',
+                      passProps: {
+                        setData: (data) => setScannedData(data)
+                      }
                     }
                    })}>
                     <Text style={{color: 'white', fontSize: 26}}>Scan</Text>

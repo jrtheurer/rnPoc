@@ -6,7 +6,7 @@ import BarcodeMask from 'react-native-barcode-mask';
 import { Navigation } from 'react-native-navigation';
 import { Styles } from './Styles';
 
-const Scanner = ({componentId}) => {
+const Scanner = ({componentId, setData}) => {
   const [scanned, setScanned] = useState<boolean>(false);
   const [torchOn, setTorchOn ] = useState<boolean>(false);
   const [hasPermission, setHasPermission] = useState<boolean>();
@@ -34,18 +34,18 @@ const Scanner = ({componentId}) => {
     // };
   }, []);
 
-  // if (hasPermission === null) {
-  //   return <View />;
-  // }
-  // if (hasPermission === false) {
-  //   return <View><Text>No access to camera</Text></View>;
-  // }
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <View><Text>No access to camera</Text></View>;
+  }
 
   return(
   <> 
   <View style={StyleSheet.absoluteFillObject}>
   <Camera 
-  style={{ flex: 1, flexDirection: 'column' }}
+  style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}
   barCodeScannerSettings={{
     barCodeTypes: [
       BarCodeScanner.Constants.BarCodeType.code128, 
@@ -57,21 +57,15 @@ const Scanner = ({componentId}) => {
   ratio='16:9'
   onBarCodeScanned={scanned ? (obj) => {} : (obj) => {
     setScanned(true);
-    Navigation.push(componentId, {
-      component: {
-        name: 'com.yardapppoc',
-        passProps: {
-          barcodeData: obj.data
-        }
-      }
-      });
+    Navigation.pop(componentId);
+    setData(obj.data);
   }}>
     <BarcodeMask showAnimatedLine={false} width='90%' edgeColor={Styles.colors.KarGreen}/>
     <TouchableOpacity style={{backgroundColor: 'white', height: 25, borderRadius: 6, alignItems: 'flex-end'}} onPress={() => setTorchOn(!torchOn)}>
       <Text>FlashLight</Text>
     </TouchableOpacity>
   </Camera>
-</View> 
+</View>
 </>);
 }
 
