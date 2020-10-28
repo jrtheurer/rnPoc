@@ -7,23 +7,26 @@ import Printer from './Printer';
 import Scanner from './Scanner';
 import { Styles } from './Styles';
 
-Navigation.registerComponent('com.yardapppoc', () => App);
-Navigation.registerComponent('scanner', () => Scanner);
-Navigation.registerComponent('printer', () => Printer);
 Navigation.setDefaultOptions({
   statusBar: {
     backgroundColor: Styles.colors.KarGreen
   },
   topBar: {
     title: {
+      text: 'Yard App',
       color: 'white'
     },
-    background: Styles.colors.KarGreen,
+    background: {
+      color: Styles.colors.KarGreen
+    },
     backButton: {
       color: 'white'
     }
   }
 });
+Navigation.registerComponent('com.yardapppoc', () => App);
+Navigation.registerComponent('scanner', () => Scanner);
+Navigation.registerComponent('printer', () => Printer);
 Navigation.events().registerAppLaunchedListener(() => {
    Navigation.setRoot({
      root: {

@@ -1,15 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Camera } from 'expo-camera';
 import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
@@ -17,11 +6,9 @@ import {
   ScrollView,
   View,
   Text,
-  StatusBar,
   TouchableOpacity,
   Image,
 } from 'react-native';
-import BarcodeMask from 'react-native-barcode-mask';
 import { Navigation } from 'react-native-navigation';
 
 import {
@@ -132,36 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
-
-App.options = {
-  topBar: {
-    title: {
-      text: 'Home',
-      color: 'white'
-    },
-    background: {
-      color: Styles.colors.KarGreen
-    }
   }
-};
+});
 
 export default App;

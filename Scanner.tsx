@@ -69,17 +69,4 @@ const Scanner = ({componentId, setData}) => {
 </>);
 }
 
-Scanner.options = {
-  topBar: {
-    title: {
-      text: 'Scanner',
-      color: 'white'
-    },
-    background: {
-      color: Styles.colors.KarGreen
-    }
-  }
-  };
-
-
 export default Scanner;
